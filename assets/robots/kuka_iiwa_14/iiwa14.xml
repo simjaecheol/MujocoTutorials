@@ -1,5 +1,5 @@
 <mujoco model="iiwa14">
-  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <compiler angle="radian" meshdir="../../mujoco_menagerie/kuka_iiwa_14/assets" autolimits="true"/>
 
   <option integrator="implicitfast"/>
 

@@ -9,11 +9,12 @@
 ```text
 MujocoTutorials/
 ├── assets/                            # 모든 로봇 및 3D 물체 모델 통합 디렉토리
-│   ├── robots/                        # 매니퓰레이터 MJCF 모델 및 메쉬/텍스처 에셋
-│   │   ├── franka_emika_panda/        # Franka Emika Panda (7-DoF 단팔)
-│   │   ├── kuka_iiwa_14/              # KUKA LBR iiwa 14 (7-DoF 토크 제어 단팔)
-│   │   ├── universal_robots_ur5e/     # Universal Robots UR5e (6-DoF 단팔)
-│   │   └── aloha/                     # ALOHA 2 (ViperX 300s 6-DoF × 2 양팔 PBR 모델)
+│   ├── mujoco_menagerie/              # [Git Submodule] Google DeepMind 공식 50+종 로봇 모델 및 3D 메쉬
+│   ├── robots/                        # 튜토리얼 전용 커스텀 MJCF 설정 (메쉬는 mujoco_menagerie 서브모듈 공유)
+│   │   ├── franka_emika_panda/        # 모캡 타겟 및 엔드이펙터 카메라가 포함된 Panda XML
+│   │   ├── kuka_iiwa_14/              # 직접 토크 제어(<motor>) 및 모캡 타겟이 포함된 KUKA iiwa 14 XML
+│   │   ├── universal_robots_ur5e/     # 모캡 타겟 및 엔드이펙터 카메라가 포함된 UR5e XML
+│   │   └── aloha/                     # ALOHA 2 PBR 텍스처 및 4-카메라 워크스테이션 모델
 │   ├── objects/                       # 조작 작업용 3D 물체 에셋
 │   │   ├── edr/                       # 서랍장(drawer), 노트북(laptop), 마커펜, 헤드폰 등
 │   │   ├── gso/                       # Google Scanned Objects (그릇, 컵, 공구함, 식기건조대 등)
@@ -66,16 +67,20 @@ from utils.notebook_setup import init_notebook
 project_root = init_notebook()
 ```
 
-### 2.2 로봇 모델 경로 조회 (`get_robot_scene_path`)
-이름만으로 `assets/robots/` 내의 MJCF XML 전체 경로를 가져올 수 있습니다:
+### 2.2 로봇 모델 경로 조회 (`get_robot_scene_path`, `list_menagerie_robots`)
+튜토리얼 기본 로봇(`"ur5e"`, `"panda"`, `"kuka"`, `"aloha"`)뿐만 아니라, `assets/mujoco_menagerie` 서브모듈에 포함된 **50종 이상의 모든 공식 로봇 모델**(`"unitree_go2"`, `"boston_dynamics_spot"`, `"shadow_hand"` 등)을 이름만으로 불러올 수 있습니다:
 
 ```python
 import mujoco
-from utils import get_robot_scene_path
+from utils import get_robot_scene_path, list_menagerie_robots
 
-# 지원 이름: "ur5e", "panda", "kuka", "aloha"
+# 1) 튜토리얼 커스텀 설정 로봇 로드 ("ur5e", "panda", "kuka", "aloha")
 xml_path = get_robot_scene_path("kuka")
 model = mujoco.MjModel.from_xml_path(xml_path)
+
+# 2) MuJoCo Menagerie 서브모듈 내 전체 로봇 목록 확인 및 로드
+print(list_menagerie_robots()[:5])
+go2_xml = get_robot_scene_path("unitree_go2")
 ```
 
 ### 2.3 작업 공간 제어기 (`OperationalSpaceController`)

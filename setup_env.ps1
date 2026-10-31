@@ -9,6 +9,12 @@ Write-Host ""
 # 현재 스크립트가 위치한 폴더로 이동
 Set-Location -Path $PSScriptRoot
 
+# 0. Git 서브모듈(assets/mujoco_menagerie) 확인 및 초기화
+if (-not (Test-Path "assets\mujoco_menagerie\universal_robots_ur5e\scene.xml")) {
+    Write-Host "[0/3] 'assets/mujoco_menagerie' Git 서브모듈 초기화 중..." -ForegroundColor Cyan
+    git submodule update --init --recursive
+}
+
 # 1. uv 설치 여부 확인 및 자동 설치
 if (-not (Get-Command "uv" -ErrorAction SilentlyContinue)) {
     $uvPaths = @(

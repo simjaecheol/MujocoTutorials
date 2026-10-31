@@ -79,7 +79,8 @@ uv run mkdocs serve
 ```text
 MujocoTutorials/
 ├── assets/                            # 모든 로봇 및 3D 물체 모델 통합 디렉토리
-│   ├── robots/                        # UR5e, Franka Panda, KUKA iiwa 14, ALOHA 2 양팔 모델
+│   ├── mujoco_menagerie/              # [Git Submodule] Google DeepMind 공식 50+종 로봇 메쉬 및 모델 저장소
+│   ├── robots/                        # 튜토리얼 전용 MJCF 설정 (모캡 타겟, 토크 액추에이터, ALOHA 2 PBR 텍스처)
 │   ├── objects/                       # YCB, GSO, EDR, Letters, MuJoCo 3D 물체 에셋
 │   └── imgs/                          # 튜토리얼 데모 GIF 및 배너 이미지
 ├── src/                               # 통합 파이썬 소스 패키지

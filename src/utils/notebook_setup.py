@@ -3,7 +3,8 @@ Windows 환경을 위한 Jupyter Notebook 공통 초기화 및 에셋 경로 유
 - mediapy에서 내장 ffmpeg(imageio-ffmpeg)를 자동으로 사용하도록 연결합니다.
 - matplotlib 한글 폰트(맑은 고딕) 및 마이너스 기호 깨짐을 방지합니다.
 - notebooks/ 하위에서 실행하더라도 프로젝트 루트 디렉토리를 작업 경로로 자동 설정합니다.
-- 모든 로봇 모델(assets/robots/) 및 3D 물체 에셋(assets/objects/) 경로 헬퍼를 제공합니다.
+- 튜토리얼 전용 로봇 설정(assets/robots/), MuJoCo Menagerie 서브모듈(assets/mujoco_menagerie/),
+  그리고 3D 물체 에셋(assets/objects/) 경로 헬퍼를 제공합니다.
 """
 import os
 import platform
@@ -14,14 +15,31 @@ import matplotlib.pyplot as plt
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 ASSETS_DIR = PROJECT_ROOT / "assets"
 ROBOTS_DIR = ASSETS_DIR / "robots"
+MENAGERIE_DIR = ASSETS_DIR / "mujoco_menagerie"
 OBJECTS_DIR = ASSETS_DIR / "objects"
 IMGS_DIR = ASSETS_DIR / "imgs"
 NOTEBOOKS_DIR = PROJECT_ROOT / "notebooks"
 
 
-def get_robot_scene_path(robot_name: str) -> str:
-    """로봇 이름('ur5e', 'panda', 'kuka', 'aloha')에 해당하는 기본 MJCF scene XML 경로를 반환합니다."""
-    mapping = {
+def list_menagerie_robots() -> list[str]:
+    """assets/mujoco_menagerie 서브모듈 내의 사용 가능한 모든 로봇 모델 디렉토리 목록을 반환합니다."""
+    if not MENAGERIE_DIR.exists():
+        return []
+    return sorted([
+        d.name for d in MENAGERIE_DIR.iterdir()
+        if d.is_dir() and not d.name.startswith(".") and (d / "scene.xml").exists()
+    ])
+
+
+def get_robot_scene_path(robot_name: str, use_menagerie: bool = False) -> str:
+    """
+    로봇 이름에 해당하는 MJCF scene XML 경로를 반환합니다.
+    - 기본 튜토리얼 로봇('ur5e', 'panda', 'kuka', 'aloha'): 모캡 타겟/토크 액추에이터/PBR이 설정된 assets/robots/ 내 XML 반환
+      (3D 메쉬는 assets/mujoco_menagerie 서브모듈을 공유)
+    - use_menagerie=True 이거나 그 외 50+종 로봇 이름('unitree_go2', 'boston_dynamics_spot', 'shadow_hand' 등):
+      assets/mujoco_menagerie/<robot_name>/scene.xml 반환
+    """
+    tutorial_mapping = {
         "ur5e": ROBOTS_DIR / "universal_robots_ur5e" / "scene.xml",
         "universal_robots_ur5e": ROBOTS_DIR / "universal_robots_ur5e" / "scene.xml",
         "panda": ROBOTS_DIR / "franka_emika_panda" / "scene.xml",
@@ -30,10 +48,25 @@ def get_robot_scene_path(robot_name: str) -> str:
         "kuka_iiwa_14": ROBOTS_DIR / "kuka_iiwa_14" / "scene.xml",
         "aloha": ROBOTS_DIR / "aloha" / "scene_pbr.xml",
     }
+    menagerie_aliases = {
+        "ur5e": "universal_robots_ur5e",
+        "panda": "franka_emika_panda",
+        "kuka": "kuka_iiwa_14",
+    }
     key = robot_name.lower()
-    if key not in mapping:
-        raise ValueError(f"알 수 없는 로봇 이름입니다: {robot_name}. 지원 목록: {list(mapping.keys())}")
-    return str(mapping[key])
+    if not use_menagerie and key in tutorial_mapping:
+        return str(tutorial_mapping[key])
+
+    menagerie_name = menagerie_aliases.get(key, key)
+    menagerie_scene = MENAGERIE_DIR / menagerie_name / "scene.xml"
+    if menagerie_scene.exists():
+        return str(menagerie_scene)
+
+    raise ValueError(
+        f"알 수 없는 로봇 이름입니다: {robot_name}. "
+        f"튜토리얼 기본: {list(tutorial_mapping.keys())}, "
+        f"Menagerie 지원({len(list_menagerie_robots())}종): list_menagerie_robots()로 확인하세요."
+    )
 
 
 def init_notebook() -> Path:

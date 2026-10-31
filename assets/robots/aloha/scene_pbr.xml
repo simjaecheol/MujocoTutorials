@@ -53,7 +53,7 @@ limitations under the License.
     <mesh file="aloha_mapped_mesh/wormseye_mount.obj"/>
 
     <!-- Table dimensions (length x width x height in meters): 1.21x0.76x0.75 -->
-    <mesh file="tablelegs.obj"/>
+    <mesh name="tablelegs" file="../../../mujoco_menagerie/aloha/assets/tablelegs.obj"/>
     <mesh file="table_top/table_mesh_mapped.obj"/>
   </asset>
 
