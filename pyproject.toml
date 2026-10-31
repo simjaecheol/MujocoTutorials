@@ -1,11 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "mujoco-robotics-tutorials"
-version = "0.1.0"
-description = "Windows 환경에서 MuJoCo를 활용해 로보틱스(시뮬레이션, 매니퓰레이터 제어, 수치 최적화, 궤적 최적화/MPC)를 배우는 인터랙티브 Jupyter Notebook 튜토리얼"
+name = "mujoco-tutorials"
+version = "0.3.0"
+description = "Windows 환경에서 MuJoCo를 활용해 로보틱스(시뮬레이션, 매니퓰레이터 제어, 수치 최적화, MPC, ALOHA 2 양팔 로봇 학습)를 배우는 통합 Jupyter Notebook 튜토리얼"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "mujoco>=3.1.6",
+    "mujoco>=3.3.3",
+    "dm-control>=1.0.31",
+    "dm-env>=1.6",
+    "immutabledict>=4.1.0",
+    "absl-py>=2.1.0",
+    "pillow>=10.3.0",
+    "rich>=13.7.0",
+    "typing-extensions>=4.11.0",
     "numpy>=1.26.4,<2.0.0",
     "matplotlib>=3.8.4",
     "mediapy>=1.2.0",
@@ -17,8 +28,24 @@ dependencies = [
     "jupyterlab>=4.2.0",
     "notebook>=7.2.0",
     "ipywidgets>=8.1.2",
+    "mkdocs-material>=9.5.0",
+    "mkdocs-jupyter>=0.24.7",
 ]
+
+[project.optional-dependencies]
+inference = [
+    "gdm-robotics",
+    "grpcio",
+    "safari-sdk>=2.4.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["viewer", "run_eval"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["controllers*", "tasks*", "utils*"]
 
 [tool.uv]
 managed = true
-

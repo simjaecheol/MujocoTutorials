@@ -11,7 +11,6 @@ Set-Location -Path $PSScriptRoot
 
 # 1. uv 설치 여부 확인 및 자동 설치
 if (-not (Get-Command "uv" -ErrorAction SilentlyContinue)) {
-    # 기본 설치 경로 확인
     $uvPaths = @(
         "$env:USERPROFILE\.local\bin",
         "$env:USERPROFILE\.cargo\bin",
@@ -34,9 +33,9 @@ if (-not (Get-Command "uv" -ErrorAction SilentlyContinue)) {
     Write-Host "[1/3] 'uv' 패키지 매니저 확인 완료 ($uvVer)" -ForegroundColor Green
 }
 
-# 2. Python 3.11 및 가상환경(.venv) 패키지 동기화
+# 2. Python 3.11 및 가상환경(.venv) 패키지 동기화 (src/ 통합 모듈 포함)
 Write-Host ""
-Write-Host "[2/3] Python 3.11 및 로보틱스 필수 패키지(MuJoCo, JAX, CasADi, Jupyter 등) 설치 중..." -ForegroundColor Cyan
+Write-Host "[2/3] Python 3.11 및 로보틱스 필수 패키지(MuJoCo, dm_control, JAX, CasADi, MkDocs 등) 설치 중..." -ForegroundColor Cyan
 uv sync
 
 # 3. Jupyter 커널 등록
@@ -47,14 +46,12 @@ uv run python -m ipykernel install --user --name mujoco-robotics --display-name 
 # 4. 설치 검증
 Write-Host ""
 Write-Host "[검증] 주요 패키지 임포트 확인 중..." -ForegroundColor Cyan
-uv run python -c "import mujoco, numpy, jax, casadi, mediapy, imageio_ffmpeg; print(f'  - MuJoCo: {mujoco.__version__}\n  - NumPy: {numpy.__version__}\n  - JAX: {jax.__version__}\n  - CasADi: {casadi.__version__}\n  - FFmpeg(내장): {imageio_ffmpeg.get_ffmpeg_exe()}')"
+uv run python -c "import mujoco, dm_control, utils, controllers, tasks, numpy, jax, casadi, mediapy, imageio_ffmpeg; from tasks import task_suite; print(f'  - MuJoCo: {mujoco.__version__}\n  - 통합 패키지(src/tasks) 태스크: {len(task_suite.TASK_FACTORIES)}종 로드 완료\n  - NumPy: {numpy.__version__}\n  - JAX: {jax.__version__}\n  - CasADi: {casadi.__version__}\n  - FFmpeg(내장): {imageio_ffmpeg.get_ffmpeg_exe()}')"
 
 Write-Host ""
 Write-Host "==========================================================" -ForegroundColor Green
 Write-Host "  환경 설정이 모두 완료되었습니다!" -ForegroundColor Green
-Write-Host "  - VS Code / Cursor / Antigravity에서 .ipynb 파일을 열고" -ForegroundColor White
-Write-Host "    커널로 '.venv (Python 3.11)' 또는 'Python (MuJoCo Robotics)'를 선택하세요." -ForegroundColor White
-Write-Host "  - 브라우저에서 실행하려면 'run_jupyter.bat'을 실행하거나" -ForegroundColor White
-Write-Host "    터미널에 'uv run jupyter lab'을 입력하세요." -ForegroundColor White
+Write-Host "  - 실습 노트북 경로: notebooks/01_... ~ 06_...ipynb" -ForegroundColor White
+Write-Host "  - Jupyter Lab 실행: 'run_jupyter.bat' 더블클릭" -ForegroundColor White
+Write-Host "  - 웹 문서 로컬 확인: 'run_docs.bat' 더블클릭 (http://127.0.0.1:8000)" -ForegroundColor White
 Write-Host "==========================================================" -ForegroundColor Green
-

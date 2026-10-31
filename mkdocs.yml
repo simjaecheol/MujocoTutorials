@@ -1,0 +1,87 @@
+site_name: MuJoCo Robotics Tutorials (Windows)
+site_description: Windows 환경에서 MuJoCo와 Jupyter Notebook으로 배우는 로보틱스 (기초 시뮬레이션, 매니퓰레이터 제어, 수치 최적화, MPC, ALOHA 2 양팔 로봇)
+site_url: https://simjaecheol.github.io/MujocoTutorials/
+repo_url: https://github.com/simjaecheol/MujocoTutorials
+repo_name: simjaecheol/MujocoTutorials
+
+theme:
+  name: material
+  language: ko
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: 다크 모드로 전환
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: 라이트 모드로 전환
+
+hooks:
+  - docs/hooks.py
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      include_source: true
+      execute: false
+      ignore_h1_titles: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+  - tables
+  - attr_list
+  - md_in_html
+
+extra_javascript:
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+  - javascripts/katex.js
+
+extra_css:
+  - https://unpkg.com/katex@0/dist/katex.min.css
+
+nav:
+  - 홈 (Overview): index.md
+  - 시작 가이드 (Installation): getting_started.md
+  - 아키텍처 (Architecture): architecture.md
+  - 커리큘럼 가이드 (Curriculum):
+      - "01. MuJoCo 기초 및 시뮬레이션": curriculum/01_mujoco_basic.md
+      - "02. 로봇 팔 기구학 및 제어": curriculum/02_robot_arms.md
+      - "03. 인터랙티브 3D 뷰어 & 모캡": curriculum/03_robot_arm_mocap.md
+      - "04. 비볼록 수치 최적화": curriculum/04_optimization.md
+      - "05. 직접 전사법 궤적 최적화 & MPC": curriculum/05_direct_transcription_mpc.md
+      - "06. ALOHA 2 양팔 로봇 시뮬레이션": curriculum/06_aloha_bimanual_sim.md
+  - 실습 노트북 웹 뷰어 (Notebooks):
+      - "Notebook 01: MuJoCo 기초": notebooks/01_mujoco_basic.ipynb
+      - "Notebook 02: 로봇 팔 제어": notebooks/02_robot_arms.ipynb
+      - "Notebook 03: 인터랙티브 모캡": notebooks/03_robot_arm_mocap.ipynb
+      - "Notebook 04: 비볼록 최적화": notebooks/04_optimization.ipynb
+      - "Notebook 05: 직접 전사법 & MPC": notebooks/05_direct_transcription_mpc.ipynb
+      - "Notebook 06: ALOHA 2 양팔 로봇": notebooks/06_aloha_bimanual_sim.ipynb
+
