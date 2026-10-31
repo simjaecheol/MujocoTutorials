@@ -1,0 +1,17 @@
+# Windows MuJoCo Robotics Tutorials - 필수 패키지 목록
+# 권장 설치 방법: setup_env.bat 실행 또는 `uv sync`
+# pip 사용 시: pip install -r requirements.txt
+
+mujoco>=3.1.6
+numpy>=1.26.4,<2.0.0
+matplotlib>=3.8.4
+mediapy>=1.2.0
+imageio-ffmpeg>=0.5.1
+jax>=0.4.28
+jaxlib>=0.4.28
+casadi>=3.6.5
+ipykernel>=6.29.4
+jupyterlab>=4.2.0
+notebook>=7.2.0
+ipywidgets>=8.1.2
+

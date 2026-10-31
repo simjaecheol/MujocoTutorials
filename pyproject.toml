@@ -1,0 +1,24 @@
+[project]
+name = "mujoco-robotics-tutorials"
+version = "0.1.0"
+description = "Windows 환경에서 MuJoCo를 활용해 로보틱스(시뮬레이션, 매니퓰레이터 제어, 수치 최적화, 궤적 최적화/MPC)를 배우는 인터랙티브 Jupyter Notebook 튜토리얼"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "mujoco>=3.1.6",
+    "numpy>=1.26.4,<2.0.0",
+    "matplotlib>=3.8.4",
+    "mediapy>=1.2.0",
+    "imageio-ffmpeg>=0.5.1",
+    "jax>=0.4.28",
+    "jaxlib>=0.4.28",
+    "casadi>=3.6.5",
+    "ipykernel>=6.29.4",
+    "jupyterlab>=4.2.0",
+    "notebook>=7.2.0",
+    "ipywidgets>=8.1.2",
+]
+
+[tool.uv]
+managed = true
+
