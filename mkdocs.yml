@@ -77,6 +77,7 @@ nav:
       - "04. 비볼록 수치 최적화": curriculum/04_optimization.md
       - "05. 직접 전사법 궤적 최적화 & MPC": curriculum/05_direct_transcription_mpc.md
       - "06. ALOHA 2 양팔 로봇 시뮬레이션": curriculum/06_aloha_bimanual_sim.md
+      - "07. MuJoCo Playground & MJX 병렬 학습": curriculum/07_mujoco_playground_mjx.md
   - 실습 노트북 웹 뷰어 (Notebooks):
       - "Notebook 01: MuJoCo 기초": notebooks/01_mujoco_basic.ipynb
       - "Notebook 02: 로봇 팔 제어": notebooks/02_robot_arms.ipynb
@@ -84,4 +85,5 @@ nav:
       - "Notebook 04: 비볼록 최적화": notebooks/04_optimization.ipynb
       - "Notebook 05: 직접 전사법 & MPC": notebooks/05_direct_transcription_mpc.ipynb
       - "Notebook 06: ALOHA 2 양팔 로봇": notebooks/06_aloha_bimanual_sim.ipynb
+      - "Notebook 07: Playground & MJX": notebooks/07_mujoco_playground_mjx.ipynb
 

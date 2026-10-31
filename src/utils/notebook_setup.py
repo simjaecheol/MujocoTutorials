@@ -27,7 +27,7 @@ def list_menagerie_robots() -> list[str]:
         return []
     return sorted([
         d.name for d in MENAGERIE_DIR.iterdir()
-        if d.is_dir() and not d.name.startswith(".") and (d / "scene.xml").exists()
+        if d.is_dir() and not d.name.startswith(".") and any(d.glob("scene*.xml"))
     ])
 
 
@@ -36,8 +36,8 @@ def get_robot_scene_path(robot_name: str, use_menagerie: bool = False) -> str:
     로봇 이름에 해당하는 MJCF scene XML 경로를 반환합니다.
     - 기본 튜토리얼 로봇('ur5e', 'panda', 'kuka', 'aloha'): 모캡 타겟/토크 액추에이터/PBR이 설정된 assets/robots/ 내 XML 반환
       (3D 메쉬는 assets/mujoco_menagerie 서브모듈을 공유)
-    - use_menagerie=True 이거나 그 외 50+종 로봇 이름('unitree_go2', 'boston_dynamics_spot', 'shadow_hand' 등):
-      assets/mujoco_menagerie/<robot_name>/scene.xml 반환
+    - use_menagerie=True 이거나 그 외 60+종 로봇 이름('unitree_go1', 'unitree_g1', 'leap_hand', 'shadow_hand' 등):
+      assets/mujoco_menagerie/<robot_name>/scene*.xml 반환
     """
     tutorial_mapping = {
         "ur5e": ROBOTS_DIR / "universal_robots_ur5e" / "scene.xml",
@@ -52,15 +52,25 @@ def get_robot_scene_path(robot_name: str, use_menagerie: bool = False) -> str:
         "ur5e": "universal_robots_ur5e",
         "panda": "franka_emika_panda",
         "kuka": "kuka_iiwa_14",
+        "go1": "unitree_go1",
+        "go2": "unitree_go2",
+        "g1": "unitree_g1",
+        "h1": "unitree_h1",
+        "spot": "boston_dynamics_spot",
     }
     key = robot_name.lower()
     if not use_menagerie and key in tutorial_mapping:
         return str(tutorial_mapping[key])
 
     menagerie_name = menagerie_aliases.get(key, key)
-    menagerie_scene = MENAGERIE_DIR / menagerie_name / "scene.xml"
-    if menagerie_scene.exists():
-        return str(menagerie_scene)
+    robot_dir = MENAGERIE_DIR / menagerie_name
+    if robot_dir.exists():
+        for candidate in ["scene.xml", "scene_right.xml", "scene_position.xml"]:
+            if (robot_dir / candidate).exists():
+                return str(robot_dir / candidate)
+        scenes = sorted(robot_dir.glob("scene*.xml"))
+        if scenes:
+            return str(scenes[0])
 
     raise ValueError(
         f"알 수 없는 로봇 이름입니다: {robot_name}. "

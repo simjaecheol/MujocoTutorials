@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "mujoco>=3.3.3",
+    "mujoco-mjx>=3.3.3",
     "dm-control>=1.0.31",
     "dm-env>=1.6",
     "immutabledict>=4.1.0",
@@ -33,6 +34,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+playground = [
+    "playground>=0.0.4",
+    "brax>=0.12.1",
+    "flax",
+    "ml_collections",
+]
 inference = [
     "gdm-robotics",
     "grpcio",

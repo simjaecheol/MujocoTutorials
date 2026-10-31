@@ -16,6 +16,7 @@ flowchart LR
     D --> E["05. 직접 전사법 & MPC\n(CasADi + IPOPT,\n카트폴 스윙업 실시간 제어)"]
     C --> F["06. ALOHA 2 양팔 시뮬레이션\n(Bimanual IK, 4-Camera,\n20종 조작 벤치마크)"]
     E --> F
+    F --> G["07. MuJoCo Playground & MJX\n(jax.vmap 대규모 병렬 시뮬레이션,\nGo1 사족보행, LEAP 다지 로봇 손)"]
 ```
 
 ---
@@ -30,6 +31,7 @@ flowchart LR
 | **04** | [04. 비볼록 최적화 가이드](curriculum/04_optimization.md) | [04_optimization.ipynb](notebooks/04_optimization.ipynb) | 뉴턴법, 레벤버그-마쿼트(LM) 정규화, 가우스-뉴턴(Gauss-Newton), 페널티 방법, 원시-쌍대 KKT 뉴턴-랩슨, 증강 라그랑지안(ALM) | ![alm](assets/imgs/augmented_lagrangian.png) |
 | **05** | [05. 직접 전사법 & MPC 가이드](curriculum/05_direct_transcription_mpc.md) | [05_direct_transcription_mpc.ipynb](notebooks/05_direct_transcription_mpc.ipynb) | 카트폴(도립진자) 동역학, `CasadiMujocoWrap` 유한차분 래핑, 직접 전사법(Direct Transcription) 스윙업, Warm-start 실시간 MPC | - |
 | **06** | [06. ALOHA 2 양팔 로봇 가이드](curriculum/06_aloha_bimanual_sim.md) | [06_aloha_bimanual_sim.ipynb](notebooks/06_aloha_bimanual_sim.ipynb) | ALOHA 2 양팔(14-Actuator) PBR 모델, 4-카메라 멀티뷰 렌더링, 양팔 미분 역기구학(Bimanual IK), `dm_control` 기반 20종 일상 조작 태스크 | ![aloha](assets/imgs/aloha/walkthrough.png) |
+| **07** | [07. MuJoCo Playground & MJX 가이드](curriculum/07_mujoco_playground_mjx.md) | [07_mujoco_playground_mjx.ipynb](notebooks/07_mujoco_playground_mjx.ipynb) | `mujoco.mjx` + `jax.vmap` 대규모 병렬 물리 시뮬레이션, `reward.tolerance` & MPPI, Unitree Go1 사족보행(조이스틱·외란·도메인 랜덤화), LEAP Hand $SO(3)$ 인핸드 조작 & 비대칭 액터-크리틱 | ![playground](assets/imgs/playground_banner.png) |
 
 ---
 

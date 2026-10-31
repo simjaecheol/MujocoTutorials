@@ -3,6 +3,7 @@
 # pip 사용 시: pip install -r requirements.txt && pip install -e .
 
 mujoco>=3.3.3
+mujoco-mjx>=3.3.3
 dm-control>=1.0.31
 dm-env>=1.6
 immutabledict>=4.1.0

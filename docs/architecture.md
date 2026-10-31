@@ -44,7 +44,8 @@ MujocoTutorials/
 │   ├── 03_robot_arm_mocap.ipynb
 │   ├── 04_optimization.ipynb
 │   ├── 05_direct_transcription_mpc.ipynb
-│   └── 06_aloha_bimanual_sim.ipynb
+│   ├── 06_aloha_bimanual_sim.ipynb
+│   └── 07_mujoco_playground_mjx.ipynb
 │
 ├── docs/                              # MkDocs 웹 문서 소스
 ├── mkdocs.yml                         # MkDocs Material 설정 파일
